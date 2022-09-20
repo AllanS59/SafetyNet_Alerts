@@ -17,4 +17,14 @@ public class MedicalRecord {
 	
 	private String[] allergies;
 	
+	
+	
+	public void updateMedicalRecord (MedicalRecord updatedMedicalRecord) {
+		this.firstName = updatedMedicalRecord.getFirstName();
+		this.lastName = updatedMedicalRecord.getLastName();
+		this.birthdate = updatedMedicalRecord.getBirthdate();
+		this.medications = updatedMedicalRecord.getMedications();
+		this.allergies = updatedMedicalRecord.getAllergies();
+	}
+	
 }

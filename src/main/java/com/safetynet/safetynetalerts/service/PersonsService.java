@@ -1,7 +1,5 @@
 package com.safetynet.safetynetalerts.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +13,18 @@ import lombok.Data;
 public class PersonsService {
 
 
-	
-	
-	
+	@Autowired
+	private PersonsRepository personsRepository ;
 	
 	
 	public Person getPersonByFirstNameAndLastName (Person[] persons, String firstName, String lastName) {
 		
-		PersonsRepository personsRepository = new PersonsRepository() ;
-				
+		return personsRepository.getPersonByFirstNameAndLastName (persons, firstName, lastName);
+	}
+	
+	
+	public Person deletePersonByFirstNameAndLastName (Person[] persons, String firstName, String lastName) {
+		
 		return personsRepository.getPersonByFirstNameAndLastName (persons, firstName, lastName);
 	}
 	

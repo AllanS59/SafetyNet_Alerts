@@ -1,45 +1,109 @@
 package com.safetynet.safetynetalerts.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.safetynet.safetynetalerts.model.AppData;
 import com.safetynet.safetynetalerts.model.Person;
-import com.safetynet.safetynetalerts.repository.AppDataRepository;
+import com.safetynet.safetynetalerts.service.AppDataService;
 import com.safetynet.safetynetalerts.service.PersonsService;
 
 @RestController
 public class PersonsController {
 
-//	@Autowired
-//	AppDataRepository appDataRepo = new AppDataRepository();
+	@Autowired
+	AppDataService appDataService = new AppDataService();
 	
-//	@Autowired
-//	PersonsService personsService = new PersonsService();
+	@Autowired
+	PersonsService personsService = new PersonsService();
+	
+	
 	
 	/**
-	 * Read - Get one employee
-	 * 
-	 * @param id The id of the employee
-	 * @return An Employee object full filled
+	 * Read - Get all persons
+	 * @return A Person object full filled
 	 */
-	@GetMapping("/persons/{firstName}_{lastName}")
-	public Person getPerson(@PathVariable("firstName") final String firstName, @PathVariable("firstName") final String lastName) {
+	@GetMapping("/persons")
+	public Person[] getPersons() {
 		
-		AppDataRepository appDataRepo = new AppDataRepository();
-		PersonsService personsService = new PersonsService();
-			
-		AppData appData = appDataRepo.readDatafromJson("src/main/resources/data.json");
+		//lecture du fichier Json
+		AppData appData = appDataService.readDatafromJson("src/main/resources/data.json");
         Person[] persons = appData.getPersons();
-        
+               
+		return persons;	
+	}
+	
+        		
+	
+	/**
+	 * Read - Get one person
+	 * 
+	 * @param firstName The first name of the person
+	 * @param lastName The last name of the person
+	 * @return A Person object full filled
+	 */
+	@GetMapping("/person/{firstName}_{lastName}")
+	public Person getPerson(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
+		
+		//lecture du fichier Json
+		AppData appData = appDataService.readDatafromJson("src/main/resources/data.json");
+        Person[] persons = appData.getPersons();
+       
+        //Search the person by Name in the Persons Array
         Person foundPerson = personsService.getPersonByFirstNameAndLastName(persons, firstName, lastName);
         
-        System.out.println (persons[0].getFirstName());
-		return foundPerson;
-        //return foundPerson.getAddress();
-		
+		return foundPerson;	
+	}
+	
+	
+	/**
+	 * Create - Add a new person
+	 * @param person An object Person
+	 * @return The Person object saved
+	 */
+	@PostMapping("/person")
+	public Person CreatePerson(@RequestBody Person person) {
+		appDataService.addPersonInJson(person, "src/main/resources/data.json");
+		return person;
+	}
+	
+	
+	
+	/**
+	 * Update - Update an existing person
+	 * @param firstName The first name of the person
+	 * @param lastName The last name of the person
+	 * @return
+	 */
+	@PutMapping("/employee/{firstName}_{lastName}")
+	public Person updatePerson(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName, @RequestBody Person person) {
+		appDataService.updatePersonInJson(firstName, lastName , person, "src/main/resources/data.json");
+		return person;
+	} 
+	
+	
+	/**
+	 * Delete - Delete an person
+	 * @param firstName The first name of the person
+	 * @param lastName The last name of the person
+	 */
+	@DeleteMapping("/person/{firstName}_{lastName}")
+	public void deletePerson(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
+		appDataService.deletePersonInJson(firstName, lastName , "src/main/resources/data.json");
 	}
 
 }
