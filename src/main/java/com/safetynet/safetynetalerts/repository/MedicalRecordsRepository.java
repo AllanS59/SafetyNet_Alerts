@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.safetynet.safetynetalerts.model.MedicalRecord;
-import com.safetynet.safetynetalerts.model.Person;
 
 @Repository
 public class MedicalRecordsRepository {

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.safetynet.safetynetalerts.model.AppData;
 import com.safetynet.safetynetalerts.model.Firestation;
-import com.safetynet.safetynetalerts.model.Person;
 import com.safetynet.safetynetalerts.service.AppDataService;
 import com.safetynet.safetynetalerts.service.FirestationsService;
 
@@ -72,7 +71,7 @@ public class FirestationsController {
 	 */
 	@PostMapping("/firestation")
 	public Firestation CreateFirestation(@RequestBody Firestation firestation) {
-		appDataService.addFirestationInJson(firestation, "src/main/resources/data.json");
+		appDataService.addFirestationInJson(firestation, "src/main/resources/data2.json");
 		return firestation;
 	}
 	
@@ -88,7 +87,7 @@ public class FirestationsController {
 		//Convert the address from URL version to database version
 				String convertedAddress = address.replace("_", " ");
 				
-		appDataService.updateFirestationInJson(convertedAddress , firestation, "src/main/resources/data.json");
+		appDataService.updateFirestationInJson(convertedAddress , firestation, "src/main/resources/data2.json");
 		return firestation;
 	} 
 	
@@ -99,7 +98,7 @@ public class FirestationsController {
 	 */
 	@DeleteMapping("/firestation/{address}")
 	public void deleteFirestation(@PathVariable("address") final String address) {
-		appDataService.deleteFirestationInJson(address , "src/main/resources/data.json");
+		appDataService.deleteFirestationInJson(address , "src/main/resources/data2.json");
 	}
 	
 }

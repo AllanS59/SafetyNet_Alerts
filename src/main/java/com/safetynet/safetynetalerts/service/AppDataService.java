@@ -15,7 +15,7 @@ import com.safetynet.safetynetalerts.repository.AppDataRepository;
 
 import lombok.Data;
 
-@Data
+
 @Service
 public class AppDataService {
 
@@ -23,6 +23,7 @@ public class AppDataService {
 	private AppDataRepository appRepo;
 
 	public AppData readDatafromJson(String jsonFileName) {
+		appRepo = new AppDataRepository();
 		return appRepo.readDatafromJson(jsonFileName);
 	}
 

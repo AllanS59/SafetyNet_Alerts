@@ -1,10 +1,7 @@
 package com.safetynet.safetynetalerts.model;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-
 import lombok.Data;
 
-@JsonFilter("DynamicFilter")
 @Data
 public class Person {
 	

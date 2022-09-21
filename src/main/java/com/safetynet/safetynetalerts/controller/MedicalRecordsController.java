@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.safetynet.safetynetalerts.model.AppData;
-import com.safetynet.safetynetalerts.model.Firestation;
 import com.safetynet.safetynetalerts.model.MedicalRecord;
-import com.safetynet.safetynetalerts.model.Person;
 import com.safetynet.safetynetalerts.service.AppDataService;
 import com.safetynet.safetynetalerts.service.MedicalRecordsService;
 
@@ -71,7 +69,7 @@ public class MedicalRecordsController {
 	 */
 	@PostMapping("/medicalRecord")
 	public MedicalRecord CreateMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
-		appDataService.addMedicalRecordInJson(medicalRecord, "src/main/resources/data.json");
+		appDataService.addMedicalRecordInJson(medicalRecord, "src/main/resources/data2.json");
 		return medicalRecord;
 	}
 	
@@ -83,7 +81,7 @@ public class MedicalRecordsController {
 	 */
 	@PutMapping("/medicalRecord/{firstName}_{lastName}")
 	public MedicalRecord updateMedicalRecord(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName, @RequestBody MedicalRecord medicalRecord) {
-		appDataService.updateMedicalRecordInJson(firstName, lastName , medicalRecord, "src/main/resources/data.json");
+		appDataService.updateMedicalRecordInJson(firstName, lastName , medicalRecord, "src/main/resources/data2.json");
 		return medicalRecord;
 	} 
 	
@@ -95,6 +93,6 @@ public class MedicalRecordsController {
 	 */
 	@DeleteMapping("/medicalRecord/{firstName}_{lastName}")
 	public void deleteMedicalRecord(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
-		appDataService.deleteMedicalRecordInJson(firstName, lastName , "src/main/resources/data.json");
+		appDataService.deleteMedicalRecordInJson(firstName, lastName , "src/main/resources/data2.json");
 	}
 }

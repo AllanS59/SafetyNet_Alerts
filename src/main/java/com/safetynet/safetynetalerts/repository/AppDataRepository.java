@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
@@ -16,7 +17,8 @@ import com.safetynet.safetynetalerts.model.Firestation;
 import com.safetynet.safetynetalerts.model.MedicalRecord;
 import com.safetynet.safetynetalerts.model.Person;
 
-@Repository
+//@Repository
+@Component
 public class AppDataRepository {
 	
 	@Autowired
@@ -198,6 +200,8 @@ public class AppDataRepository {
 	
 	public Person[] getPersonsByAddress (String address,AppData appData ) {
 		
+		personsRepository = new PersonsRepository();
+		
 		//find each persons of the array for requested address
 		Person[] persons = appData.getPersons();
 		Person[] personsByAddress = personsRepository.getPersonsByAddress(persons, address);
@@ -208,6 +212,8 @@ public class AppDataRepository {
 	
 	
 	public Person[] getPersonsByCity (String city,AppData appData ) {
+		
+		personsRepository = new PersonsRepository();
 		
 		//find each persons of the array for requested address
 		Person[] persons = appData.getPersons();
@@ -220,6 +226,8 @@ public class AppDataRepository {
 	
 	
 	public Firestation[] getFirestationsByStation (int station, AppData appData) {
+		
+		firestationsRepository = new FirestationsRepository();
 		
 		//find each firestation of the array for the requested station number
 		Firestation[] firestations = firestationsRepository.getFirestationsByStation (appData.getFirestations(),  station);

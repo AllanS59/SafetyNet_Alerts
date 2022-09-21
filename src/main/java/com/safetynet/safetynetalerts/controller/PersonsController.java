@@ -1,11 +1,7 @@
 package com.safetynet.safetynetalerts.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.safetynet.safetynetalerts.model.AppData;
 import com.safetynet.safetynetalerts.model.Person;
 import com.safetynet.safetynetalerts.service.AppDataService;
@@ -91,7 +84,7 @@ public class PersonsController {
 	 */
 	@PutMapping("/employee/{firstName}_{lastName}")
 	public Person updatePerson(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName, @RequestBody Person person) {
-		appDataService.updatePersonInJson(firstName, lastName , person, "src/main/resources/data.json");
+		appDataService.updatePersonInJson(firstName, lastName , person, "src/main/resources/data2.json");
 		return person;
 	} 
 	
@@ -103,7 +96,7 @@ public class PersonsController {
 	 */
 	@DeleteMapping("/person/{firstName}_{lastName}")
 	public void deletePerson(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
-		appDataService.deletePersonInJson(firstName, lastName , "src/main/resources/data.json");
+		appDataService.deletePersonInJson(firstName, lastName , "src/main/resources/data2.json");
 	}
 
 }
