@@ -57,12 +57,13 @@ public class AppData {
 	/**
 	 * Update - Update a Person
 	 * 
-	 * @param firstName           The first name of the person
-	 * @param lastName            The last name of the person
 	 * @param personUpdatedValues An object Person
 	 */
-	public void updatePerson(String firstName, String lastName, Person personUpdatedValues) {
+	public void updatePerson(Person personUpdatedValues) {
 
+		String firstName = personUpdatedValues.getFirstName();
+		String lastName = personUpdatedValues.getLastName();
+		
 		for (Person p : this.persons) {
 			if (firstName.equals(p.getFirstName()) && lastName.equals(p.getLastName())) {
 				p.updatePerson(personUpdatedValues);
@@ -113,11 +114,12 @@ public class AppData {
 	/**
 	 * Update - Update a Firestation
 	 * 
-	 * @param address                  An object Address
 	 * @param firestationUpdatedValues An object Firestation
 	 */
-	public void updateFirestation(String address, Firestation firestationUpdatedValues) {
+	public void updateFirestation(Firestation firestationUpdatedValues) {
 
+		String address = firestationUpdatedValues.getAddress();
+		
 		for (Firestation f : this.firestations) {
 			if (address.equals(f.getAddress())) {
 				f.updateFirestation(firestationUpdatedValues);
@@ -168,11 +170,13 @@ public class AppData {
 	/**
 	 * Update - Update a MedicalRecord
 	 * 
-	 * @param medicalRecordToUpdate      An object MedicalRecord
 	 * @param medicalRecordUpdatedValues An object MedicalRecord
 	 */
-	public void updateMedicalRecord(String firstName, String lastName, MedicalRecord medicalRecordUpdatedValues) {
+	public void updateMedicalRecord(MedicalRecord medicalRecordUpdatedValues) {
 
+		String firstName = medicalRecordUpdatedValues.getFirstName();
+		String lastName = medicalRecordUpdatedValues.getLastName();
+		
 		for (MedicalRecord m : this.medicalrecords) {
 			if (firstName.equals(m.getFirstName()) && lastName.equals(m.getLastName())) {
 				m.updateMedicalRecord(medicalRecordUpdatedValues);

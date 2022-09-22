@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.safetynet.safetynetalerts.model.MedicalRecord;
-import com.safetynet.safetynetalerts.repository.MedicalRecordsRepository;
-
+import com.safetynet.safetynetalerts.repository.Impl.MedicalRecordsRepoImpl;
 
 import lombok.Data;
 
@@ -14,7 +13,7 @@ import lombok.Data;
 public class MedicalRecordsService {
 
 	@Autowired
-	private MedicalRecordsRepository medicalRecordsRepository ;
+	private MedicalRecordsRepoImpl medicalRecordsRepository ;
 	
 	
 	

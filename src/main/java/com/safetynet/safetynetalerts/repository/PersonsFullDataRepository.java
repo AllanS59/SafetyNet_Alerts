@@ -12,22 +12,24 @@ import com.safetynet.safetynetalerts.model.Firestation;
 import com.safetynet.safetynetalerts.model.Person;
 import com.safetynet.safetynetalerts.model.MedicalRecord;
 import com.safetynet.safetynetalerts.model.PersonFullData;
+import com.safetynet.safetynetalerts.repository.Impl.FirestationsRepositoryImpl;
+import com.safetynet.safetynetalerts.repository.Impl.MedicalRecordsRepoImpl;
 
 @Repository
 public class PersonsFullDataRepository {
 
 	
 	@Autowired
-	private FirestationsRepository firestationRepo;
+	private FirestationsRepositoryImpl firestationRepo;
 	
 	@Autowired
-	private MedicalRecordsRepository medicalRecordRepo;
+	private MedicalRecordsRepoImpl medicalRecordRepo;
 	
 	
 	public PersonFullData[] getPersonsByAppData(AppData appData) {
 		
-		firestationRepo = new FirestationsRepository();
-		medicalRecordRepo = new MedicalRecordsRepository();
+		firestationRepo = new FirestationsRepositoryImpl();
+		medicalRecordRepo = new MedicalRecordsRepoImpl();
 		
 
 		List<PersonFullData> listPersonsFullData = new ArrayList<PersonFullData>();

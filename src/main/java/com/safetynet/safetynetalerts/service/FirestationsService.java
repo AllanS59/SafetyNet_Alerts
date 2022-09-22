@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.safetynet.safetynetalerts.model.Firestation;
-import com.safetynet.safetynetalerts.repository.FirestationsRepository;
+import com.safetynet.safetynetalerts.repository.Impl.FirestationsRepositoryImpl;
 
 import lombok.Data;
 
@@ -13,7 +13,7 @@ import lombok.Data;
 public class FirestationsService {
 	
 	@Autowired
-	private FirestationsRepository firestationsRepository;
+	private FirestationsRepositoryImpl firestationsRepository;
 
 	
 	public Firestation getFirestationByAddress (Firestation[] firestations, String address) {		

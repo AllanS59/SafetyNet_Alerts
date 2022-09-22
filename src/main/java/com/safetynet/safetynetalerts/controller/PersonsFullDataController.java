@@ -133,7 +133,7 @@ public class PersonsFullDataController {
 	 * @return A Person object full filled
 	 */
 	@GetMapping("/fire?address={address}")
-	public MappingJacksonValue getPhonesByStation(@PathVariable("address") final String address) {
+	public MappingJacksonValue getPersonsAndStationByAddress(@PathVariable("address") final String address) {
 
 		// Read JSON file
 		AppData appData = appDataService.readDatafromJson("src/main/resources/data.json");
@@ -243,7 +243,7 @@ public class PersonsFullDataController {
 	 * @return A Person object full filled
 	 */
 	@GetMapping("/communityEmail?city={city}")
-	public MappingJacksonValue getPersonsByCity(@PathVariable("city") final String city) {
+	public MappingJacksonValue getMailsByCity(@PathVariable("city") final String city) {
 
 		// Read JSON file
 		AppData appData = appDataService.readDatafromJson("src/main/resources/data.json");

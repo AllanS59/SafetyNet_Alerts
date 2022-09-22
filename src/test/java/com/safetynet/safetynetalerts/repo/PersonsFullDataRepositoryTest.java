@@ -8,21 +8,21 @@ import org.junit.jupiter.api.Test;
 
 import com.safetynet.safetynetalerts.model.AppData;
 import com.safetynet.safetynetalerts.model.PersonFullData;
-import com.safetynet.safetynetalerts.repository.AppDataRepository;
 import com.safetynet.safetynetalerts.repository.PersonsFullDataRepository;
+import com.safetynet.safetynetalerts.repository.Impl.AppDataRepoImpl;
 
 public class PersonsFullDataRepositoryTest {
 
 	private static PersonsFullDataRepository personsFullDataRepo;
-	private static AppDataRepository appDataRepository;
+	private static AppDataRepoImpl appDataRepository;
 	private static PersonFullData[] allPersons;
 
 	@BeforeAll
 	private static void setUp() {
-		appDataRepository = new AppDataRepository();
+		appDataRepository = new AppDataRepoImpl();
 		personsFullDataRepo = new PersonsFullDataRepository();
 		
-		AppData appData = appDataRepository.readDatafromJson("src/main/resources/dataTest.json");
+		AppData appData = appDataRepository.readDatafromJson();
 		allPersons = personsFullDataRepo.getPersonsByAppData(appData);
 	}
 

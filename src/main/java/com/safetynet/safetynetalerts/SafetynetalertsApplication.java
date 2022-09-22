@@ -27,9 +27,9 @@ import org.springframework.context.annotation.ComponentScan;
 import com.safetynet.safetynetalerts.model.AppData;
 import com.safetynet.safetynetalerts.model.Firestation;
 import com.safetynet.safetynetalerts.model.Person;
-import com.safetynet.safetynetalerts.repository.AppDataRepository;
-import com.safetynet.safetynetalerts.repository.FirestationsRepository;
-import com.safetynet.safetynetalerts.repository.PersonsRepository;
+import com.safetynet.safetynetalerts.repository.Impl.AppDataRepoImpl;
+import com.safetynet.safetynetalerts.repository.Impl.FirestationsRepositoryImpl;
+import com.safetynet.safetynetalerts.repository.Impl.PersonsRepoImpl;
 import com.safetynet.safetynetalerts.service.AppDataService;
 
 
@@ -49,9 +49,9 @@ public class SafetynetalertsApplication implements CommandLineRunner  {
 	        System.out.println("Hello World!");
 	        
 	        
-	        AppDataRepository appDataRepo = new AppDataRepository();
-	        PersonsRepository personsRepo = new PersonsRepository();
-	        FirestationsRepository firestationRepo = new FirestationsRepository();
+	        AppDataRepoImpl appDataRepo = new AppDataRepoImpl();
+	        PersonsRepoImpl personsRepo = new PersonsRepoImpl();
+	        FirestationsRepositoryImpl firestationRepo = new FirestationsRepositoryImpl();
 	        
 	        
 	        AppData appData = appDataService.readDatafromJson("src/main/resources/data.json");
@@ -73,10 +73,10 @@ public class SafetynetalertsApplication implements CommandLineRunner  {
 //	        System.out.println(firestationsAddress[0]);
 //	        System.out.println(firestationsAddress[1]);
 	        
-	        Person[] personsAddress2 = appDataRepo.getPersonsByAddress("892 Downing Ct", appData);
-	        System.out.println(personsAddress2[0]);
-	        System.out.println(personsAddress2[1]);
-	        System.out.println(personsAddress2[2]);
+//	        Person[] personsAddress2 = appDataRepo.getPersonsByAddress("892 Downing Ct", appData);
+//	        System.out.println(personsAddress2[0]);
+//	        System.out.println(personsAddress2[1]);
+//	        System.out.println(personsAddress2[2]);
 	        
 	        
 			
