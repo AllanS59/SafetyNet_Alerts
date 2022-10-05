@@ -28,4 +28,5 @@ public class PersonsControllerTest {
 	public void testGetPersonByName () throws Exception   {
       	mockMvc.perform(get("/person/Jonanathan_Marrack")).andExpect(status().isOk()).andExpect(jsonPath("$.firstName", is("Jonanathan")));
 	}
+	
 }

@@ -1,4 +1,4 @@
-package com.safetynet.safetynetalerts.repository.Impl;
+package com.safetynet.safetynetalerts.repository.impl;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -6,8 +6,6 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
@@ -18,7 +16,7 @@ import com.safetynet.safetynetalerts.model.MedicalRecord;
 import com.safetynet.safetynetalerts.model.Person;
 import com.safetynet.safetynetalerts.repository.AppDataRepository;
 
-@Component
+@Repository
 public class AppDataRepoImpl implements AppDataRepository {
 	
 	private String jsonFileName = "src/main/resources/data.json";
@@ -56,7 +54,7 @@ public class AppDataRepoImpl implements AppDataRepository {
 	public void writeDataInJson(AppData appData) {
 		
 		//Conversion of the App Data into a string in Json format
-		Gson gson =  new GsonBuilder().setPrettyPrinting().create();
+		Gson gson =  new GsonBuilder().setPrettyPrinting().setDateFormat("dd/MM/yyyy").create();
 		String json = gson.toJson(appData);
 		
 		//Write into the file the new Data

@@ -8,11 +8,9 @@ import com.safetynet.safetynetalerts.model.AppData;
 import com.safetynet.safetynetalerts.model.PersonFullData;
 import com.safetynet.safetynetalerts.repository.PersonsFullDataRepository;
 
-import lombok.Data;
 
-@Data
 @Service
-public class PersonsFullDataService {
+public class PersonsFullDataServiceImpl {
 
 	@Autowired
 	private PersonsFullDataRepository personsFullDataRepo ;

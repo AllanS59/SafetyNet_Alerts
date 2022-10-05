@@ -9,20 +9,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.safetynet.safetynetalerts.model.AppData;
 import com.safetynet.safetynetalerts.model.Firestation;
-import com.safetynet.safetynetalerts.service.AppDataService;
-import com.safetynet.safetynetalerts.service.FirestationsService;
+import com.safetynet.safetynetalerts.service.impl.FirestationsServiceImpl;
 
 
 @RestController
 public class FirestationsController {
 	
 	@Autowired
-	AppDataService appDataService = new AppDataService();
-	
-	@Autowired
-	FirestationsService firestationsService = new FirestationsService();
+	FirestationsServiceImpl firestationsService = new FirestationsServiceImpl();
 	
 	
 	
@@ -32,14 +27,9 @@ public class FirestationsController {
 	 */
 	@GetMapping("/firestations")
 	public Firestation[] getFirestations() {
-		
-		//lecture du fichier Json
-		AppData appData = appDataService.readDatafromJson("src/main/resources/data.json");
-		Firestation[] firestations = appData.getFirestations();
+		Firestation[] firestations = firestationsService.getFirestations();
 		return firestations;	
 	}
-		
-        
         
 	/**
 	 * Read - Get one firestation
@@ -49,16 +39,12 @@ public class FirestationsController {
 	 */
 	@GetMapping("/firestation/{address}")
 	public Firestation getFirestation(@PathVariable("address") final String address) {
-		
-		//lecture du fichier Json
-		AppData appData = appDataService.readDatafromJson("src/main/resources/data.json");
-		Firestation[] firestations = appData.getFirestations();
          
 		//Convert the address from URL version to database version
 		String convertedAddress = address.replace("_", " ");
 		
 		//Search the firestation by Address in the Persons Array
-		Firestation foundfirestation = firestationsService.getFirestationByAddress(firestations, convertedAddress);
+		Firestation foundfirestation = firestationsService.getFirestationByAddress(convertedAddress);
         
 		return foundfirestation;	
 	}
@@ -71,7 +57,7 @@ public class FirestationsController {
 	 */
 	@PostMapping("/firestation")
 	public Firestation CreateFirestation(@RequestBody Firestation firestation) {
-		appDataService.addFirestationInJson(firestation, "src/main/resources/data2.json");
+		firestationsService.addFirestationInData(firestation);
 		return firestation;
 	}
 	
@@ -81,14 +67,11 @@ public class FirestationsController {
 	 * @param address The address of the firestation
 	 * @return
 	 */
-	@PutMapping("/firestation/{address}")
-	public Firestation updateFirestation(@PathVariable("address") final String address, @RequestBody Firestation firestation) {
-		
-		//Convert the address from URL version to database version
-				String convertedAddress = address.replace("_", " ");
+	@PutMapping("/firestation")
+	public Firestation updateFirestation( @RequestBody Firestation firestation) {
 				
-		appDataService.updateFirestationInJson(convertedAddress , firestation, "src/main/resources/data2.json");
-		return firestation;
+				firestationsService.updateFirestationInData(firestation);
+				return firestation;
 	} 
 	
 	
@@ -98,7 +81,11 @@ public class FirestationsController {
 	 */
 	@DeleteMapping("/firestation/{address}")
 	public void deleteFirestation(@PathVariable("address") final String address) {
-		appDataService.deleteFirestationInJson(address , "src/main/resources/data2.json");
+		firestationsService.deleteFirestationInData(address);
 	}
+	
+	
+	
+	
 	
 }

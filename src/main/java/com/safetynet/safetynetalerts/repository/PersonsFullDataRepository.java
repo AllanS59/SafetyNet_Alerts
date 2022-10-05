@@ -12,8 +12,8 @@ import com.safetynet.safetynetalerts.model.Firestation;
 import com.safetynet.safetynetalerts.model.Person;
 import com.safetynet.safetynetalerts.model.MedicalRecord;
 import com.safetynet.safetynetalerts.model.PersonFullData;
-import com.safetynet.safetynetalerts.repository.Impl.FirestationsRepositoryImpl;
-import com.safetynet.safetynetalerts.repository.Impl.MedicalRecordsRepoImpl;
+import com.safetynet.safetynetalerts.repository.impl.FirestationsRepositoryImpl;
+import com.safetynet.safetynetalerts.repository.impl.MedicalRecordsRepoImpl;
 
 @Repository
 public class PersonsFullDataRepository {

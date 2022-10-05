@@ -25,6 +25,6 @@ public class MedicalRecordsControllerTest {
 	
 	@Test
 	public void testGetMedicalRecordByName () throws Exception   {
-      	mockMvc.perform(get("/medicalRecord/Jonanathan_Marrack")).andExpect(status().isOk()).andExpect(jsonPath("$.birthdate", is("1989-02-28T23:00:00.000+00:00")));
+      	mockMvc.perform(get("/medicalRecord/Jonanathan_Marrack")).andExpect(status().isOk()).andExpect(jsonPath("$.birthdate", is("01/03/1989")));
 	}
 }

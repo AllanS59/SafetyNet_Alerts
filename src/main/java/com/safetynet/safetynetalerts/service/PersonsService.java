@@ -1,32 +1,56 @@
 package com.safetynet.safetynetalerts.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.safetynet.safetynetalerts.model.Person;
-import com.safetynet.safetynetalerts.repository.Impl.PersonsRepoImpl;
-
-import lombok.Data;
-
-@Data
-@Service
-public class PersonsService {
 
 
-	@Autowired
-	private PersonsRepoImpl personsRepository ;
+public interface PersonsService {
+
+	/**
+	 * get the Persons from Json file
+	 * @return Person[] array of the persons found
+	 */
+	 Person[] getPersons ();
 	
+		/**
+		 * get the Persons from a specific person
+		 * @param firstName firstName of the person we search
+		 * @param lastName lastName of the person we search
+		 * @return Person the Person found
+		 */
+	 Person getPersonByFirstNameAndLastName (String firstName, String lastName);
+	 
+		/**
+		 * get the Persons from a specific address
+		 * @param address the address to search
+		 * @return Person[] array of the persons found
+		 */
+	 Person[] getPersonByAddress (String address);
+	 
+		/**
+		 * get the Persons from a specific city
+		 * @param city the address to search
+		 * @return Person[] array of the persons found
+		 */
+	 Person[] getPersonByCity (String city);
+	 
+		/**
+		 * add Person in data
+		 * @param person person to add in data
+		 */
+	void addPersonInData(Person person);
+
+	/**
+	 * update Person in data
+	 * @param person person to update in data
+	 */
+	void updatePersonInData(Person person);
 	
-	public Person getPersonByFirstNameAndLastName (Person[] persons, String firstName, String lastName) {
-		
-		return personsRepository.getPersonByFirstNameAndLastName (persons, firstName, lastName);
-	}
-	
-	
-	public Person deletePersonByFirstNameAndLastName (Person[] persons, String firstName, String lastName) {
-		
-		return personsRepository.getPersonByFirstNameAndLastName (persons, firstName, lastName);
-	}
-	
-	
+	/**
+	 * delete Person in data
+	 * @param firstName firstname of the person to delete
+	 * @param lastName lastname of the person to delete
+	 */
+	 void deletePersonInData (String firstName, String lastName);
+
 }

@@ -9,19 +9,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.safetynet.safetynetalerts.model.AppData;
 import com.safetynet.safetynetalerts.model.MedicalRecord;
-import com.safetynet.safetynetalerts.service.AppDataService;
 import com.safetynet.safetynetalerts.service.MedicalRecordsService;
+
 
 @RestController
 public class MedicalRecordsController {
-
-	@Autowired
-	AppDataService appDataService = new AppDataService();
 	
 	@Autowired
-	MedicalRecordsService medicalRecordsService = new MedicalRecordsService();
+	private MedicalRecordsService medicalRecordsService;
 	
 	
 	/**
@@ -31,9 +27,7 @@ public class MedicalRecordsController {
 	@GetMapping("/medicalRecords")
 	public MedicalRecord[] getMedicalRecords() {
 		
-		//lecture du fichier Json
-		AppData appData = appDataService.readDatafromJson("src/main/resources/data.json");
-		MedicalRecord[] medicalRecords = appData.getMedicalrecords();
+		MedicalRecord[] medicalRecords = medicalRecordsService.getMedicalRecords();
 		return medicalRecords;	
 	}
 		
@@ -49,15 +43,7 @@ public class MedicalRecordsController {
 	@GetMapping("/medicalRecord/{firstName}_{lastName}")
 	public MedicalRecord getMedicalRecord(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
 		
-		//lecture du fichier Json
-		AppData appData = appDataService.readDatafromJson("src/main/resources/data.json");
-		MedicalRecord[] medicalRecords = appData.getMedicalrecords();
-		
-		System.out.println(medicalRecords[0].getBirthdate());
-       
-        //Search the person by Name in the Persons Array
-		MedicalRecord foundMedicalRecord = medicalRecordsService.getMedicalRecordByFirstNameAndLastName(medicalRecords, firstName, lastName);
-        
+		MedicalRecord foundMedicalRecord = medicalRecordsService.getMedicalRecordByFirstNameAndLastName(firstName, lastName);
 		return foundMedicalRecord;	
 	}
 	
@@ -69,7 +55,7 @@ public class MedicalRecordsController {
 	 */
 	@PostMapping("/medicalRecord")
 	public MedicalRecord CreateMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
-		appDataService.addMedicalRecordInJson(medicalRecord, "src/main/resources/data2.json");
+		medicalRecordsService.addMedicalRecordInData(medicalRecord);
 		return medicalRecord;
 	}
 	
@@ -79,9 +65,9 @@ public class MedicalRecordsController {
 	 * @param lastName The last name of the person
 	 * @return
 	 */
-	@PutMapping("/medicalRecord/{firstName}_{lastName}")
-	public MedicalRecord updateMedicalRecord(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName, @RequestBody MedicalRecord medicalRecord) {
-		appDataService.updateMedicalRecordInJson(firstName, lastName , medicalRecord, "src/main/resources/data2.json");
+	@PutMapping("/medicalRecord")
+	public MedicalRecord updateMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+		medicalRecordsService.updateMedicalRecordInData(medicalRecord);
 		return medicalRecord;
 	} 
 	
@@ -93,6 +79,6 @@ public class MedicalRecordsController {
 	 */
 	@DeleteMapping("/medicalRecord/{firstName}_{lastName}")
 	public void deleteMedicalRecord(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
-		appDataService.deleteMedicalRecordInJson(firstName, lastName , "src/main/resources/data2.json");
+		medicalRecordsService.deleteMedicalRecordInData(firstName, lastName);
 	}
 }

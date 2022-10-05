@@ -29,7 +29,8 @@ public class AppData {
 		listPersons.add(personToAdd);
 
 		// Convert the array list back to an array
-		listPersons.toArray(this.persons);
+		Person[] foundPersons = listPersons.toArray(new Person[0]);
+		setPersons(foundPersons);
 	}
 
 	/**
@@ -51,7 +52,9 @@ public class AppData {
 			}
 		}
 		// Convert the array list back to an array
-		listPersons.toArray(this.persons);
+		Person[] foundPersons = listPersons.toArray(new Person[0]);
+		setPersons(foundPersons);
+
 	}
 
 	/**
@@ -63,7 +66,7 @@ public class AppData {
 
 		String firstName = personUpdatedValues.getFirstName();
 		String lastName = personUpdatedValues.getLastName();
-		
+
 		for (Person p : this.persons) {
 			if (firstName.equals(p.getFirstName()) && lastName.equals(p.getLastName())) {
 				p.updatePerson(personUpdatedValues);
@@ -86,7 +89,8 @@ public class AppData {
 		listFirestations.add(firestationToAdd);
 
 		// Convert the array list back to an array
-		listFirestations.toArray(this.firestations);
+		Firestation[] foundFirestations = listFirestations.toArray(new Firestation[0]);
+		setFirestations(foundFirestations);
 	}
 
 	/**
@@ -108,7 +112,8 @@ public class AppData {
 		}
 
 		// Convert the array list back to an array
-		listFirestations.toArray(this.firestations);
+		Firestation[] foundFirestations = listFirestations.toArray(new Firestation[0]);
+		setFirestations(foundFirestations);
 	}
 
 	/**
@@ -119,7 +124,7 @@ public class AppData {
 	public void updateFirestation(Firestation firestationUpdatedValues) {
 
 		String address = firestationUpdatedValues.getAddress();
-		
+
 		for (Firestation f : this.firestations) {
 			if (address.equals(f.getAddress())) {
 				f.updateFirestation(firestationUpdatedValues);
@@ -142,7 +147,8 @@ public class AppData {
 		listMedicalRecords.add(medicalRecordToAdd);
 
 		// Convert the array list back to an array
-		listMedicalRecords.toArray(this.medicalrecords);
+		MedicalRecord[] foundMedicalRecords = listMedicalRecords.toArray(new MedicalRecord[0]);
+		setMedicalrecords(foundMedicalRecords);
 	}
 
 	/**
@@ -155,16 +161,17 @@ public class AppData {
 		List<MedicalRecord> listMedicalRecords = new ArrayList<>(Arrays.asList(this.medicalrecords));
 
 		// Delete elements to it if found
-				for (int i = 0; i < listMedicalRecords.size(); i++) {
-					if (listMedicalRecords.get(i).getFirstName().equals(firstName)
-							&& listMedicalRecords.get(i).getLastName().equals(lastName)) {
-						listMedicalRecords.remove(i);
-						break;
-					}
-				}
+		for (int i = 0; i < listMedicalRecords.size(); i++) {
+			if (listMedicalRecords.get(i).getFirstName().equals(firstName)
+					&& listMedicalRecords.get(i).getLastName().equals(lastName)) {
+				listMedicalRecords.remove(i);
+				break;
+			}
+		}
 
 		// Convert the array list back to an array
-		listMedicalRecords.toArray(this.medicalrecords);
+		MedicalRecord[] foundMedicalRecords = listMedicalRecords.toArray(new MedicalRecord[0]);
+		setMedicalrecords(foundMedicalRecords);
 	}
 
 	/**
@@ -176,7 +183,7 @@ public class AppData {
 
 		String firstName = medicalRecordUpdatedValues.getFirstName();
 		String lastName = medicalRecordUpdatedValues.getLastName();
-		
+
 		for (MedicalRecord m : this.medicalrecords) {
 			if (firstName.equals(m.getFirstName()) && lastName.equals(m.getLastName())) {
 				m.updateMedicalRecord(medicalRecordUpdatedValues);

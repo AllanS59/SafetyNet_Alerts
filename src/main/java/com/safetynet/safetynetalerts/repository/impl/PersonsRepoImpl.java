@@ -1,17 +1,23 @@
-package com.safetynet.safetynetalerts.repository.Impl;
+package com.safetynet.safetynetalerts.repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.safetynet.safetynetalerts.model.Person;
+import com.safetynet.safetynetalerts.repository.AppDataRepository;
 import com.safetynet.safetynetalerts.repository.PersonsRepository;
 
-@Component
+@Repository
 public class PersonsRepoImpl implements PersonsRepository {
 
+	
+	@Autowired
+	private AppDataRepository appDataRepo;
+	
+	
 	
 	public Person getPersonByFirstNameAndLastName (Person[] persons, String firstName, String lastName) {
 		
@@ -41,6 +47,7 @@ public Person[] getPersonsByAddress (Person[] persons, String address) {
 	}
 
 
+
 public Person[] getPersonsByCity (Person[] persons, String city) {
 	
 	List <Person> listPersons = new ArrayList<Person>();
@@ -57,35 +64,29 @@ public Person[] getPersonsByCity (Person[] persons, String city) {
 
 @Override
 public Person[] getPersonsFromAppData() {
-	// TODO Auto-generated method stub
-	return null;
+	Person[] persons = appDataRepo.readDatafromJson().getPersons();
+	return persons;
 }
 
-
-@Override
-public Person getpersonByfirstNameAndLastName(Person[] persons, String firstName, String lastName) {
-	// TODO Auto-generated method stub
-	return null;
-}
 
 
 @Override
 public void addPersonInData(Person person) {
-	// TODO Auto-generated method stub
+	appDataRepo.addPersonInJson(person);  
 	
 }
 
 
 @Override
 public void updatePersonInData(Person person) {
-	// TODO Auto-generated method stub
+	appDataRepo.updatePersonInJson(person);  
 	
 }
 
 
 @Override
 public void deletePersonInData(String firstName, String lastName) {
-	// TODO Auto-generated method stub
+	appDataRepo.deletePersonInJson(firstName, lastName); 
 	
 }
 		

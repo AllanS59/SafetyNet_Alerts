@@ -10,19 +10,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.safetynet.safetynetalerts.model.AppData;
 import com.safetynet.safetynetalerts.model.Person;
-import com.safetynet.safetynetalerts.service.AppDataService;
 import com.safetynet.safetynetalerts.service.PersonsService;
 
 @RestController
 public class PersonsController {
-
-	@Autowired
-	AppDataService appDataService = new AppDataService();
 	
 	@Autowired
-	PersonsService personsService = new PersonsService();
+	private PersonsService personsService;
 	
 	
 	
@@ -32,16 +27,12 @@ public class PersonsController {
 	 */
 	@GetMapping("/persons")
 	public Person[] getPersons() {
-		
-		//lecture du fichier Json
-		AppData appData = appDataService.readDatafromJson("src/main/resources/data.json");
-        Person[] persons = appData.getPersons();
-               
+        
+		Person[] persons = personsService.getPersons();      
 		return persons;	
 	}
 	
         		
-	
 	/**
 	 * Read - Get one person
 	 * 
@@ -51,14 +42,8 @@ public class PersonsController {
 	 */
 	@GetMapping("/person/{firstName}_{lastName}")
 	public Person getPerson(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
-		
-		//lecture du fichier Json
-		AppData appData = appDataService.readDatafromJson("src/main/resources/data.json");
-        Person[] persons = appData.getPersons();
-       
-        //Search the person by Name in the Persons Array
-        Person foundPerson = personsService.getPersonByFirstNameAndLastName(persons, firstName, lastName);
         
+		Person foundPerson = personsService.getPersonByFirstNameAndLastName(firstName, lastName);
 		return foundPerson;	
 	}
 	
@@ -70,7 +55,7 @@ public class PersonsController {
 	 */
 	@PostMapping("/person")
 	public Person CreatePerson(@RequestBody Person person) {
-		appDataService.addPersonInJson(person, "src/main/resources/data.json");
+		personsService.addPersonInData(person);
 		return person;
 	}
 	
@@ -82,9 +67,9 @@ public class PersonsController {
 	 * @param lastName The last name of the person
 	 * @return
 	 */
-	@PutMapping("/employee/{firstName}_{lastName}")
-	public Person updatePerson(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName, @RequestBody Person person) {
-		appDataService.updatePersonInJson(firstName, lastName , person, "src/main/resources/data2.json");
+	@PutMapping("/person")
+	public Person updatePerson(@RequestBody Person person) {
+		personsService.updatePersonInData(person);
 		return person;
 	} 
 	
@@ -96,7 +81,7 @@ public class PersonsController {
 	 */
 	@DeleteMapping("/person/{firstName}_{lastName}")
 	public void deletePerson(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
-		appDataService.deletePersonInJson(firstName, lastName , "src/main/resources/data2.json");
+		personsService.deletePersonInData(firstName, lastName);
 	}
 
 }

@@ -1,104 +1,78 @@
 package com.safetynet.safetynetalerts.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.safetynet.safetynetalerts.model.AppData;
 import com.safetynet.safetynetalerts.model.Firestation;
 import com.safetynet.safetynetalerts.model.MedicalRecord;
 import com.safetynet.safetynetalerts.model.Person;
-import com.safetynet.safetynetalerts.repository.AppDataRepository;
-import com.safetynet.safetynetalerts.repository.Impl.AppDataRepoImpl;
 
-import lombok.Data;
+public interface AppDataService {
 
+	/**
+	 * Read Json file and put information in an 'AppData' object
+	 * @return AppData (object class containing informations from Json file)
+	 */
+	AppData readDatafromJson();
 
-@Service
-public class AppDataService {
+	/**
+	 * Write data into Json file
+	 * @param appData information updated
+	 */
+	void writeDataInJson(AppData appData);
 
-	@Autowired
-	private AppDataRepository appRepo;
-
-	public AppData readDatafromJson(String jsonFileName) {
-		appRepo = new AppDataRepoImpl();
-		return appRepo.readDatafromJson();
-	}
-
-	public void writeDataInJson(AppData appData, String jsonFileName) {
-		appRepo.writeDataInJson(appData);
-	}
-
-	public void addPersonInJson(Person personToAdd, String jsonFileName) {
-		appRepo.addPersonInJson(personToAdd);
-	}
-
-	public void deletePersonInJson(String firstName, String lastName, String jsonFileName) {
-		appRepo.deletePersonInJson(firstName, lastName);
-	}
-
-	public void updatePersonInJson(String firstName, String lastName, Person personUpdatedValue, String jsonFileName) {
-		appRepo.updatePersonInJson(personUpdatedValue);
-	}
-
-	public void addFirestationInJson(Firestation firestationToAdd, String jsonFileName) {
-		appRepo.addFirestationInJson(firestationToAdd);
-	}
-
-	public void deleteFirestationInJson(String address, String jsonFileName) {
-		appRepo.deleteFirestationInJson(address);
-	}
-
-	public void updateFirestationInJson(String address, Firestation firestationUpdatedValue, String jsonFileName) {
-		appRepo.updateFirestationInJson(firestationUpdatedValue);
-	}
-
-	public void addMedicalRecordInJson(MedicalRecord medicalRecordToAdd, String jsonFileName) {
-		appRepo.addMedicalRecordInJson(medicalRecordToAdd);
-	}
-
-	public void deleteMedicalRecordInJson(String firstName, String lastName, String jsonFileName) {
-		appRepo.deleteMedicalRecordInJson(firstName, lastName);
-	}
-
-	public void updateMedicalRecordInJson(String firstName, String lastName, MedicalRecord medicalRecordUpdatedValue,
-			String jsonFileName) {
-		appRepo.updateMedicalRecordInJson(medicalRecordUpdatedValue);
-	}
-
-//	public Person[] getPersonsByStation(int station, String jsonFileName) {
-//		List<Person> listPersons = new ArrayList<Person>();
-//
-//		// Read Json file and save in AppData object
-//		AppData appData = readDatafromJson(jsonFileName);
-//
-//		// get addresses related to the station
-//		Firestation[] foundFirestations = appRepo.getFirestationsByStation(station, appData);
-//
-//		// For each address covered by station, get all persons living to that address
-//		for (Firestation f : foundFirestations) {
-//			Person[] foundPersonsOneAddress = appRepo.getPersonsByAddress(f.getAddress(), appData);
-//			List<Person> listPersonsOneAddress = new ArrayList<>(Arrays.asList(foundPersonsOneAddress));
-//			listPersons.addAll(listPersonsOneAddress);
-//		}
-//
-//		Person[] foundPersons = listPersons.toArray(new Person[0]);
-//		return foundPersons;
-//	}
+	/**
+	 * Add one Person into Json file
+	 * @param person the person information to add
+	 */
+	void addPersonInJson(Person personToAdd);
 	
-	
+	/**
+	 * Delete one Person into Json file
+	 * @param firstname the first name of the person to delete
+	 * @param lastName the last name of the person to delete
+	 */
+	void deletePersonInJson(String firstName, String lastName);
 
-//	public Person[] getPersonsByCity(String city, String jsonFileName) {
-//
-//		// Read Json file and save in AppData object
-//		AppData appData = readDatafromJson(jsonFileName);
-//
-//		Person[] foundPersons = appRepo.getPersonsByCity(city, appData);
-//		return foundPersons;
-//
-//	}
+	/**
+	 * Update one Person into Json file
+	 * @param personUpdatedValue the person to update (found with name)
+	 */
+	void updatePersonInJson(Person personUpdatedValue);
+
+	/**
+	 * Add one Firestation into Json file
+	 * @param firestationToAdd the firestation information to add
+	 */
+	void addFirestationInJson(Firestation firestationToAdd);
+
+	/**
+	 * Delete one Firestation into Json file
+	 * @param address the address of the firestation to delete
+	 */
+	void deleteFirestationInJson(String address);
+
+	/**
+	 * Update one Firestation into Json file
+	 * @param firestationUpdatedValue the firestation to update (found with address)
+	 */
+	void updateFirestationInJson(Firestation firestationUpdatedValue);
+
+	/**
+	 * Add one MedicalRecord into Json file
+	 * @param medicalRecordToAdd the medicalRecord information to add
+	 */
+	void addMedicalRecordInJson(MedicalRecord medicalRecordToAdd);
+
+	/**
+	 * Delete one MedicalRecord into Json file
+	 * @param firstname the first name of the person to delete
+	 * @param lastName the last name of the person to delete
+	 */
+	void deleteMedicalRecordInJson(String firstName, String lastName);
+
+	/**
+	 * Update one MedicalRecord into Json file
+	 * @param medicalRecordUpdatedValue the medicalrecord to update (found with name)
+	 */
+	void updateMedicalRecordInJson(MedicalRecord medicalRecordUpdatedValue);
 
 }
