@@ -3,10 +3,10 @@ package com.safetynet.safetynetalerts.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.safetynet.safetynetalerts.model.MedicalRecord;
@@ -40,8 +40,8 @@ public class MedicalRecordsController {
 	 * @param lastName The last name of the person for who we are searching the medical record
 	 * @return A MedicalRecord object full filled
 	 */
-	@GetMapping("/medicalRecord/{firstName}_{lastName}")
-	public MedicalRecord getMedicalRecord(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
+	@GetMapping("/medicalRecord")
+	public MedicalRecord getMedicalRecord(@RequestParam(name = "firstName") String firstName, @RequestParam(name = "lastName") String lastName) {
 		
 		MedicalRecord foundMedicalRecord = medicalRecordsService.getMedicalRecordByFirstNameAndLastName(firstName, lastName);
 		return foundMedicalRecord;	
@@ -77,8 +77,8 @@ public class MedicalRecordsController {
 	 * @param firstName The first name of the person
 	 * @param lastName The last name of the person
 	 */
-	@DeleteMapping("/medicalRecord/{firstName}_{lastName}")
-	public void deleteMedicalRecord(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
+	@DeleteMapping("/medicalRecord")
+	public void deleteMedicalRecord(@RequestParam(name = "firstName") String firstName, @RequestParam(name = "lastName") String lastName) {
 		medicalRecordsService.deleteMedicalRecordInData(firstName, lastName);
 	}
 }

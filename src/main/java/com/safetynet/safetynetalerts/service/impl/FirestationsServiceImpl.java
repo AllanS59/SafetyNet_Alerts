@@ -20,7 +20,6 @@ public class FirestationsServiceImpl implements FirestationsService {
 
 	@Override
 	public Firestation[] getFirestations() {
-		// TODO Auto-generated method stub
 		return firestationsRepository.getFirestationsFromAppData();
 	}
 	

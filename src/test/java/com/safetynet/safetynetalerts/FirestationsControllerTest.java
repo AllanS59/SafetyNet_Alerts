@@ -22,8 +22,8 @@ public class FirestationsControllerTest {
 	public void testGetFirestations () throws Exception   {
       	mockMvc.perform(get("/firestations")).andExpect(status().isOk()).andExpect(jsonPath("$[0].station", is(3)));
 	}
-	@Test
-	public void testGetFirestationByAddress () throws Exception   {
-      	mockMvc.perform(get("/firestation/489_Manchester_St")).andExpect(status().isOk()).andExpect(jsonPath("$.station", is(4)));
-	}
+	//@Test
+	//public void testGetFirestationByAddress () throws Exception   {
+    //  	mockMvc.perform(get("/firestation/489_Manchester_St")).andExpect(status().isOk()).andExpect(jsonPath("$.station", is(4)));
+	//}
 }

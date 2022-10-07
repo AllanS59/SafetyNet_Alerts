@@ -3,10 +3,10 @@ package com.safetynet.safetynetalerts.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.safetynet.safetynetalerts.model.Firestation;
@@ -31,23 +31,23 @@ public class FirestationsController {
 		return firestations;	
 	}
         
-	/**
-	 * Read - Get one firestation
-	 * 
-	 * @param address The address of the firestation
-	 * @return A Firestation object full filled
-	 */
-	@GetMapping("/firestation/{address}")
-	public Firestation getFirestation(@PathVariable("address") final String address) {
-         
-		//Convert the address from URL version to database version
-		String convertedAddress = address.replace("_", " ");
-		
-		//Search the firestation by Address in the Persons Array
-		Firestation foundfirestation = firestationsService.getFirestationByAddress(convertedAddress);
-        
-		return foundfirestation;	
-	}
+//	/**
+//	 * Read - Get one firestation
+//	 * 
+//	 * @param address The address of the firestation
+//	 * @return A Firestation object full filled
+//	 */
+//	@GetMapping("/firestation")
+//	public Firestation getFirestation(@RequestParam(name ="address")  String address) {
+//         
+//		//Convert the address from URL version to database version
+//		String convertedAddress = address.replace("_", " ");
+//		
+//		//Search the firestation by Address in the Persons Array
+//		Firestation foundfirestation = firestationsService.getFirestationByAddress(convertedAddress);
+//        
+//		return foundfirestation;	
+//	}
 	
 	
 	/**
@@ -79,8 +79,8 @@ public class FirestationsController {
 	 * Delete - Delete a firestation
 	 * @param address The address of the firestation
 	 */
-	@DeleteMapping("/firestation/{address}")
-	public void deleteFirestation(@PathVariable("address") final String address) {
+	@DeleteMapping("/firestation")
+	public void deleteFirestation(@RequestParam(name ="address")  String address) {
 		firestationsService.deleteFirestationInData(address);
 	}
 	

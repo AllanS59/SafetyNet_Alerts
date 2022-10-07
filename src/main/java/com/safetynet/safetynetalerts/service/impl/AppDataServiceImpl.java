@@ -61,36 +61,4 @@ public class AppDataServiceImpl implements AppDataService{
 		appRepo.updateMedicalRecordInJson(medicalRecordUpdatedValue);
 	}
 
-//	public Person[] getPersonsByStation(int station, String jsonFileName) {
-//		List<Person> listPersons = new ArrayList<Person>();
-//
-//		// Read Json file and save in AppData object
-//		AppData appData = readDatafromJson(jsonFileName);
-//
-//		// get addresses related to the station
-//		Firestation[] foundFirestations = appRepo.getFirestationsByStation(station, appData);
-//
-//		// For each address covered by station, get all persons living to that address
-//		for (Firestation f : foundFirestations) {
-//			Person[] foundPersonsOneAddress = appRepo.getPersonsByAddress(f.getAddress(), appData);
-//			List<Person> listPersonsOneAddress = new ArrayList<>(Arrays.asList(foundPersonsOneAddress));
-//			listPersons.addAll(listPersonsOneAddress);
-//		}
-//
-//		Person[] foundPersons = listPersons.toArray(new Person[0]);
-//		return foundPersons;
-//	}
-	
-	
-
-//	public Person[] getPersonsByCity(String city, String jsonFileName) {
-//
-//		// Read Json file and save in AppData object
-//		AppData appData = readDatafromJson(jsonFileName);
-//
-//		Person[] foundPersons = appRepo.getPersonsByCity(city, appData);
-//		return foundPersons;
-//
-//	}
-
 }

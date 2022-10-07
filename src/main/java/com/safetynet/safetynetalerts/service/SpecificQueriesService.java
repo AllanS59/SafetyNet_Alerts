@@ -5,7 +5,7 @@ import com.safetynet.safetynetalerts.dto.PersonNameAddressAgeMailMedicalsDTO;
 import com.safetynet.safetynetalerts.dto.PersonsByFirestationNbAdultsDTO;
 import com.safetynet.safetynetalerts.dto.PersonsChildrenByAddressDTO;
 import com.safetynet.safetynetalerts.dto.PersonsFirestationByAddressDTO;
-import com.safetynet.safetynetalerts.dto.PersonsPhonesByFirestationDTO;
+
 
 public interface SpecificQueriesService {
 
@@ -50,7 +50,7 @@ public interface SpecificQueriesService {
 	 * @param lastName the lastname of the person we search
 	 * @return PersonNameAddressAgeMailMedicalsDTO DTO object containing several information
 	 */
-	public PersonNameAddressAgeMailMedicalsDTO[] getPersonsInformation (String firstName, String lastName);
+	public PersonNameAddressAgeMailMedicalsDTO getPersonsInformation (String firstName, String lastName);
 	
 	/**
 	 * get list of emails of people from a specific city

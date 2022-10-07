@@ -11,10 +11,10 @@ import com.safetynet.safetynetalerts.dto.PersonNameAddressAgeMailMedicalsDTO;
 import com.safetynet.safetynetalerts.dto.PersonNameAddressPhoneDTO;
 import com.safetynet.safetynetalerts.dto.PersonNameAgeDTO;
 import com.safetynet.safetynetalerts.dto.PersonNameDTO;
+import com.safetynet.safetynetalerts.dto.PersonNamePhoneAgeMedicalsDTO;
 import com.safetynet.safetynetalerts.dto.PersonsByFirestationNbAdultsDTO;
 import com.safetynet.safetynetalerts.dto.PersonsChildrenByAddressDTO;
 import com.safetynet.safetynetalerts.dto.PersonsFirestationByAddressDTO;
-import com.safetynet.safetynetalerts.dto.PersonsPhonesByFirestationDTO;
 import com.safetynet.safetynetalerts.model.Firestation;
 import com.safetynet.safetynetalerts.model.MedicalRecord;
 import com.safetynet.safetynetalerts.model.Person;
@@ -158,26 +158,141 @@ public class SpecificQueriesServiceImpl implements SpecificQueriesService {
 
 	@Override
 	public PersonsFirestationByAddressDTO getPersonsAndStationByAddress(String address) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		//Initialize date
+		Person[] residents = personsService.getPersonByAddress(address);
+		MedicalRecord[] allMedicalRecords = medicalRecordsRepo.getMedicalRecordsFromData();
+		Firestation[] allFirestations = firestationsRepo.getFirestationsFromAppData();
+		
+		List<PersonNamePhoneAgeMedicalsDTO> listResidentsDTO = new ArrayList<PersonNamePhoneAgeMedicalsDTO>();
+		
+		//Get the station number covering the requested address
+		Firestation firestation = firestationsRepo.getFirestationByAddress(allFirestations, address);
+		int stationNumber = firestation.getStation();
+		
+		//For each person living in the address, get the needed info
+		for (Person p: residents) {
+			
+			MedicalRecord medicalRecord = medicalRecordsRepo.getMedicalRecordByFirstNameAndLastName(allMedicalRecords, p.getFirstName(), p.getLastName());
+			
+			PersonNamePhoneAgeMedicalsDTO residentDTO = new PersonNamePhoneAgeMedicalsDTO();
+			residentDTO.setFirstName(p.getFirstName());
+			residentDTO.setLastName(p.getLastName());
+			residentDTO.setPhone(p.getPhone());
+			residentDTO.setMedications(medicalRecord.getMedications());
+			residentDTO.setAllergies(medicalRecord.getAllergies());
+			residentDTO.setAge(medicalRecordsRepo.getAge(medicalRecord));
+			
+			listResidentsDTO.add(residentDTO);
+		}
+		
+		//transform the list of the residents into an array
+		PersonNamePhoneAgeMedicalsDTO[] residentsDTO = listResidentsDTO.toArray(new PersonNamePhoneAgeMedicalsDTO[0]);
+		
+		//Collect the data into final DTO
+		PersonsFirestationByAddressDTO residentsFirestationDTO = new PersonsFirestationByAddressDTO();
+		residentsFirestationDTO.setResidents(residentsDTO);
+		residentsFirestationDTO.setStation(stationNumber);
+		
+		return residentsFirestationDTO;
 	}
+	
+	
 
 	@Override
 	public AddressesPersonsByFirestationDTO[] getPersonsByFirestations(int[] station) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		//Initialize data
+		Person[] allPersons = personsRepo.getPersonsFromAppData();
+		MedicalRecord[] allMedicalRecords = medicalRecordsRepo.getMedicalRecordsFromData();
+		Firestation[] allFirestations = firestationsRepo.getFirestationsFromAppData();
+		
+		List<AddressesPersonsByFirestationDTO> listPersonsByAddressesDTO = new ArrayList<AddressesPersonsByFirestationDTO>();
+		
+		//For each station number, get all firestations
+		for ( int i : station) {
+			Firestation[] firestationByAddress = firestationsRepo.getFirestationsByStation(allFirestations, i);
+			
+			//For each address, get all residents
+			for (Firestation f : firestationByAddress) {
+				String firestationAddress = f.getAddress();
+				Person[] personsByAddress = personsRepo.getPersonsByAddress(allPersons, firestationAddress);
+				List<PersonNamePhoneAgeMedicalsDTO> listResidentsDTO = new ArrayList<PersonNamePhoneAgeMedicalsDTO>();
+				
+				//For each resident, get the needed information
+				for (Person p : personsByAddress) {
+					MedicalRecord medicalRecord = medicalRecordsRepo.getMedicalRecordByFirstNameAndLastName(allMedicalRecords, p.getFirstName(), p.getLastName());
+					PersonNamePhoneAgeMedicalsDTO residentDTO = new PersonNamePhoneAgeMedicalsDTO();
+					
+					residentDTO.setFirstName(p.getFirstName());
+					residentDTO.setLastName(p.getLastName());
+					residentDTO.setPhone(p.getPhone());
+					residentDTO.setMedications(medicalRecord.getMedications());
+					residentDTO.setAllergies(medicalRecord.getAllergies());
+					residentDTO.setAge(medicalRecordsRepo.getAge(medicalRecord));
+					
+					listResidentsDTO.add(residentDTO);
+				}
+				
+				PersonNamePhoneAgeMedicalsDTO[] residentsDTO = listResidentsDTO.toArray(new PersonNamePhoneAgeMedicalsDTO[0]);
+				
+				//create and add the final DTO into the list of DTOs
+				AddressesPersonsByFirestationDTO personsByAddressDTO = new AddressesPersonsByFirestationDTO();
+				personsByAddressDTO.setAddress(firestationAddress);
+				personsByAddressDTO.setResidents(residentsDTO);
+				
+				listPersonsByAddressesDTO.add(personsByAddressDTO);		
+			}
+		}
+		//transform the list of the residents into an array
+		AddressesPersonsByFirestationDTO[] PersonsByAddressesDTO = listPersonsByAddressesDTO.toArray(new AddressesPersonsByFirestationDTO[0]);
+		return PersonsByAddressesDTO;
 	}
+	
+
+	
 
 	@Override
-	public PersonNameAddressAgeMailMedicalsDTO[] getPersonsInformation(String firstName, String lastName) {
-		// TODO Auto-generated method stub
-		return null;
+	public PersonNameAddressAgeMailMedicalsDTO getPersonsInformation(String firstName, String lastName) {
+		//Initialize data
+		Person[] allPersons = personsRepo.getPersonsFromAppData();
+		MedicalRecord[] allMedicalRecords = medicalRecordsRepo.getMedicalRecordsFromData();
+		PersonNameAddressAgeMailMedicalsDTO personNameAddressAgeMailMedicalsDTO = new PersonNameAddressAgeMailMedicalsDTO();
+		
+		//Get the Person and MedicalRecord information
+		Person person = personsRepo.getPersonByFirstNameAndLastName(allPersons, firstName, lastName);
+		MedicalRecord medicalRecord = medicalRecordsRepo.getMedicalRecordByFirstNameAndLastName(allMedicalRecords, firstName, lastName);
+		
+		//set information into DTO
+		personNameAddressAgeMailMedicalsDTO.setFirstName(person.getFirstName());
+		personNameAddressAgeMailMedicalsDTO.setLastName(person.getLastName());
+		personNameAddressAgeMailMedicalsDTO.setAddress(person.getAddress());
+		personNameAddressAgeMailMedicalsDTO.setEmail(person.getEmail());
+		personNameAddressAgeMailMedicalsDTO.setAge(medicalRecordsRepo.getAge(medicalRecord));
+		personNameAddressAgeMailMedicalsDTO.setMedications(medicalRecord.getMedications());
+		personNameAddressAgeMailMedicalsDTO.setAllergies(medicalRecord.getAllergies());
+		
+		return personNameAddressAgeMailMedicalsDTO;
 	}
 
+	
 	@Override
 	public String[] getEmailsByCity(String city) {
-		// TODO Auto-generated method stub
-		return null;
+		//Initialize data
+		Person[] allPersons = personsRepo.getPersonsFromAppData();
+		List<String> listEmails = new ArrayList<String>();
+		String email = null;
+		
+		//For each Person, get email
+		Person[] personsByCity = personsRepo.getPersonsByCity(allPersons, city);
+		for (Person p : personsByCity) {
+			email = p.getEmail();
+			listEmails.add(email);
+		}
+		
+		//convert email list into array and return
+		String[] Emails = listEmails.toArray(new String[0]);
+		return Emails;
 	}
 
 }

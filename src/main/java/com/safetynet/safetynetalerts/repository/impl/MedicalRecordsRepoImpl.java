@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.safetynet.safetynetalerts.dto.PersonNameAgeDTO;
 import com.safetynet.safetynetalerts.model.MedicalRecord;
 import com.safetynet.safetynetalerts.model.Person;
 import com.safetynet.safetynetalerts.repository.AppDataRepository;
@@ -46,17 +47,17 @@ public class MedicalRecordsRepoImpl implements MedicalRecordsRepository {
 	@Override
 	public MedicalRecord[] getMedicalRecordsByMinAge(MedicalRecord[] medicalRecords, int MinAge) {
 
-		// Convert to ArrayList
-		List<MedicalRecord> listMedicalRecords = new ArrayList<>(Arrays.asList(medicalRecords));
+		// Create a list to add the correct records
+		List<MedicalRecord> listMedicalRecords = new ArrayList<MedicalRecord>();
 
-		// Delete elements to it if found
-		for (int i = 0; i < listMedicalRecords.size(); i++) {
-
+		// add elements to it if found
+		for (MedicalRecord m : medicalRecords) {
+			
 			// Calcul of the age
-			int age = getAge(listMedicalRecords.get(i));
-
-			if (age < MinAge) {
-				listMedicalRecords.remove(i);
+			int age = getAge(m);
+			
+			if (age >= MinAge) {
+				listMedicalRecords.add(m);
 			}
 		}
 
@@ -69,19 +70,19 @@ public class MedicalRecordsRepoImpl implements MedicalRecordsRepository {
 	@Override
 	public MedicalRecord[] getMedicalRecordsByMaxAge(MedicalRecord[] medicalRecords, int MaxAge) {
 
-		// Convert to ArrayList
-		List<MedicalRecord> listMedicalRecords = new ArrayList<>(Arrays.asList(medicalRecords));
+		// Create a list to add the correct records
+		List<MedicalRecord> listMedicalRecords = new ArrayList<MedicalRecord>();
 
-		// Delete elements to it if found
-		for (int i = 0; i < listMedicalRecords.size(); i++) {
-
-			// Calcul of the age
-			int age = getAge(listMedicalRecords.get(i));
-
-			if (age >= MaxAge) {
-				listMedicalRecords.remove(i);
-			}
-		}
+		// add elements to it if found
+				for (MedicalRecord m : medicalRecords) {
+					
+					// Calcul of the age
+					int age = getAge(m);
+					
+					if (age <= MaxAge) {
+						listMedicalRecords.add(m);
+					}
+				}
 
 		// Convert the array list back to an array
 		MedicalRecord[] foundMedicalRecords = listMedicalRecords.toArray(new MedicalRecord[0]);
