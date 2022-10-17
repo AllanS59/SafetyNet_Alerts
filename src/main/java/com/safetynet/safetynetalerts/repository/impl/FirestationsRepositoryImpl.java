@@ -13,14 +13,12 @@ import com.safetynet.safetynetalerts.repository.FirestationsRepository;
 @Repository
 public class FirestationsRepositoryImpl implements FirestationsRepository {
 
-	
 	@Override
 	public Firestation[] getFirestationsFromAppData() {
 		Firestation[] firestations = appDataRepo.readDatafromJson().getFirestations();
 		return firestations;
 	}
-	
-	
+
 	@Autowired
 	private AppDataRepository appDataRepo;
 
@@ -49,7 +47,6 @@ public class FirestationsRepositoryImpl implements FirestationsRepository {
 		Firestation[] foundFirestation = listFirestations.toArray(new Firestation[0]);
 		return foundFirestation;
 	}
-
 
 	@Override
 	public void addFirestationInData(Firestation firestation) {

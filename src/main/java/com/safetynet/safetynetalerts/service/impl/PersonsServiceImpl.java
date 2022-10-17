@@ -8,62 +8,53 @@ import com.safetynet.safetynetalerts.repository.AppDataRepository;
 import com.safetynet.safetynetalerts.repository.PersonsRepository;
 import com.safetynet.safetynetalerts.service.PersonsService;
 
-
 @Service
 public class PersonsServiceImpl implements PersonsService {
 
-	
+	@Autowired
+	private PersonsRepository personsRepository;
 
 	@Autowired
-	private PersonsRepository personsRepository ;
-	
-	@Autowired
-	private AppDataRepository appDataRepository ;
-	
-	
+	private AppDataRepository appDataRepository;
+
 	@Override
 	public Person[] getPersons() {
-		
+
 		return personsRepository.getPersonsFromAppData();
 	}
-	
+
 	@Override
-	public Person getPersonByFirstNameAndLastName (String firstName, String lastName) {
+	public Person getPersonByFirstNameAndLastName(String firstName, String lastName) {
 		Person[] persons = appDataRepository.readDatafromJson().getPersons();
-		return personsRepository.getPersonByFirstNameAndLastName (persons, firstName, lastName);
+		return personsRepository.getPersonByFirstNameAndLastName(persons, firstName, lastName);
 	}
-	
+
 	@Override
 	public Person[] getPersonByAddress(String address) {
 		Person[] persons = appDataRepository.readDatafromJson().getPersons();
-		return personsRepository.getPersonsByAddress (persons,address);
+		return personsRepository.getPersonsByAddress(persons, address);
 	}
-	
+
 	@Override
 	public Person[] getPersonByCity(String city) {
 		Person[] persons = appDataRepository.readDatafromJson().getPersons();
-		return personsRepository.getPersonsByCity (persons,city);
+		return personsRepository.getPersonsByCity(persons, city);
 	}
-	
-	
 
 	@Override
 	public void deletePersonInData(String firstName, String lastName) {
-		personsRepository.deletePersonInData(firstName,  lastName);	
+		personsRepository.deletePersonInData(firstName, lastName);
 	}
 
 	@Override
 	public void addPersonInData(Person person) {
-		personsRepository.addPersonInData(person);	
+		personsRepository.addPersonInData(person);
 	}
 
 	@Override
 	public void updatePersonInData(Person person) {
-		personsRepository.updatePersonInData(person);	
-		
+		personsRepository.updatePersonInData(person);
+
 	}
 
-
-
-	
 }

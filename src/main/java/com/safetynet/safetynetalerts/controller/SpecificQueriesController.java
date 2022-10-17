@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.safetynet.safetynetalerts.dto.AddressesPersonsByFirestationDTO;
 import com.safetynet.safetynetalerts.dto.PersonNameAddressAgeMailMedicalsDTO;
@@ -15,6 +17,8 @@ import com.safetynet.safetynetalerts.service.SpecificQueriesService;
 
 @RestController
 public class SpecificQueriesController {
+
+	private static final Logger LOG = LogManager.getLogger(SpecificQueriesController.class);
 
 	@Autowired
 	private SpecificQueriesService queriesService;
@@ -27,8 +31,9 @@ public class SpecificQueriesController {
 	 * @return A Person object full filled
 	 */
 	@GetMapping("/firestation")
-	public PersonsByFirestationNbAdultsDTO getPersonsByStation(	@RequestParam(name = "stationNumber") int station_number) {
-
+	public PersonsByFirestationNbAdultsDTO getPersonsByStation(
+			@RequestParam(name = "stationNumber") int station_number) {
+		LOG.info("Command /firestation received. Sending persons covered by station n°" + station_number);
 		PersonsByFirestationNbAdultsDTO answer = queriesService.getPersonsByFirestationsWithCountAdults(station_number);
 		return answer;
 	}
@@ -41,7 +46,7 @@ public class SpecificQueriesController {
 	 */
 	@GetMapping("/childAlert")
 	public PersonsChildrenByAddressDTO getMinorsByAddress(@RequestParam(name = "address") String address) {
-
+		LOG.info("Command /childAlert received. Sending children living at: " + address);
 		PersonsChildrenByAddressDTO answer = queriesService.getChildrenByAddress(address);
 		return answer;
 
@@ -55,7 +60,8 @@ public class SpecificQueriesController {
 	 */
 	@GetMapping("/phoneAlert")
 	public String[] getPhonesByStation(@RequestParam(name = "firestation") int station_number) {
-
+		LOG.info("Command /phoneAlert received. Sending phone numbers of persons covered by station n°: "
+				+ station_number);
 		String[] answer = queriesService.getPhonesByFirestation(station_number);
 		return answer;
 	}
@@ -68,8 +74,9 @@ public class SpecificQueriesController {
 	 * @return A Person object full filled
 	 */
 	@GetMapping("/fire")
-	public PersonsFirestationByAddressDTO getPersonsAndStationByAddress(@RequestParam(name = "address") String address) {
-
+	public PersonsFirestationByAddressDTO getPersonsAndStationByAddress(
+			@RequestParam(name = "address") String address) {
+		LOG.info("Command /fire received. Sending residents list at covering firestation for address : " + address);
 		PersonsFirestationByAddressDTO anwser = queriesService.getPersonsAndStationByAddress(address);
 		return anwser;
 	}
@@ -81,14 +88,14 @@ public class SpecificQueriesController {
 	 * @return A Person object full filled
 	 */
 	@GetMapping("/flood/stations")
-	public AddressesPersonsByFirestationDTO[] getPersonsByStationList(@RequestParam(name = "stations") int[] stationNumbers) {
-
+	public AddressesPersonsByFirestationDTO[] getPersonsByStationList(
+			@RequestParam(name = "stations") int[] stationNumbers) {
+		LOG.info("Command /flood/stations received. Sending residents of each address covered by station n°: "
+				+ stationNumbers);
 		AddressesPersonsByFirestationDTO[] answer = queriesService.getPersonsByFirestations(stationNumbers);
 		return answer;
 	}
 
-	
-	
 	/**
 	 * Read - Get all persons from a list of Firestation number
 	 * 
@@ -96,17 +103,13 @@ public class SpecificQueriesController {
 	 * @return A Person object full filled
 	 */
 	@GetMapping("/personInfo")
-	public PersonNameAddressAgeMailMedicalsDTO getPersonsInfoByName(@RequestParam(name = "firstName") String firstName, @RequestParam(name = "lastName") String lastName) {
-			 System.out.println(firstName);
-			 System.out.println(lastName);
-			 
-		
-		PersonNameAddressAgeMailMedicalsDTO answer = queriesService.getPersonsInformation (firstName, lastName);
-	return answer;
-}
+	public PersonNameAddressAgeMailMedicalsDTO getPersonsInfoByName(@RequestParam(name = "firstName") String firstName,
+			@RequestParam(name = "lastName") String lastName) {
+		LOG.info("Command /personInfo received. Sending personnal information for: " + firstName + " " + lastName);
+		PersonNameAddressAgeMailMedicalsDTO answer = queriesService.getPersonsInformation(firstName, lastName);
+		return answer;
+	}
 
-	
-	
 	/**
 	 * Read - Get persons from one city
 	 * 
@@ -115,8 +118,8 @@ public class SpecificQueriesController {
 	 */
 	@GetMapping("/communityEmail")
 	public String[] getMailsByCity(@RequestParam(name = "city") String city) {
-
-		String[] answer =  queriesService.getEmailsByCity(city);
+		LOG.info("Command /getMailsByCity received. Sending all emails for city: " + city);
+		String[] answer = queriesService.getEmailsByCity(city);
 		return answer;
 	}
 

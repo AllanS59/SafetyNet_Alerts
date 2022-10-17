@@ -6,6 +6,6 @@ import lombok.Data;
 public class PersonsFirestationByAddressDTO {
 
 	private PersonNamePhoneAgeMedicalsDTO[] residents;
-	
+
 	private int station;
 }

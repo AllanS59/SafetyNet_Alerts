@@ -52,10 +52,10 @@ public class MedicalRecordsRepoImpl implements MedicalRecordsRepository {
 
 		// add elements to it if found
 		for (MedicalRecord m : medicalRecords) {
-			
+
 			// Calcul of the age
 			int age = getAge(m);
-			
+
 			if (age >= MinAge) {
 				listMedicalRecords.add(m);
 			}
@@ -74,15 +74,15 @@ public class MedicalRecordsRepoImpl implements MedicalRecordsRepository {
 		List<MedicalRecord> listMedicalRecords = new ArrayList<MedicalRecord>();
 
 		// add elements to it if found
-				for (MedicalRecord m : medicalRecords) {
-					
-					// Calcul of the age
-					int age = getAge(m);
-					
-					if (age <= MaxAge) {
-						listMedicalRecords.add(m);
-					}
-				}
+		for (MedicalRecord m : medicalRecords) {
+
+			// Calcul of the age
+			int age = getAge(m);
+
+			if (age <= MaxAge) {
+				listMedicalRecords.add(m);
+			}
+		}
 
 		// Convert the array list back to an array
 		MedicalRecord[] foundMedicalRecords = listMedicalRecords.toArray(new MedicalRecord[0]);
@@ -119,13 +119,13 @@ public class MedicalRecordsRepoImpl implements MedicalRecordsRepository {
 	@Override
 	public int countChildrenFromPersonsArray(Person[] persons, MedicalRecord[] medicalRecords) {
 		int count = 0;
-		
+
 		for (Person p : persons) {
-			MedicalRecord medicalRecord = getMedicalRecordByFirstNameAndLastName(medicalRecords,
-					p.getFirstName(), p.getLastName());
-			int age = getAge (medicalRecord);
+			MedicalRecord medicalRecord = getMedicalRecordByFirstNameAndLastName(medicalRecords, p.getFirstName(),
+					p.getLastName());
+			int age = getAge(medicalRecord);
 			if (age < 18) {
-				count ++;
+				count++;
 			}
 		}
 		return count;

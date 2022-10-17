@@ -10,9 +10,8 @@ import com.safetynet.safetynetalerts.model.Person;
 import com.safetynet.safetynetalerts.repository.AppDataRepository;
 import com.safetynet.safetynetalerts.service.AppDataService;
 
-
 @Service
-public class AppDataServiceImpl implements AppDataService{
+public class AppDataServiceImpl implements AppDataService {
 
 	@Autowired
 	private AppDataRepository appRepo;

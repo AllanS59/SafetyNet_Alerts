@@ -8,28 +8,24 @@ import com.safetynet.safetynetalerts.repository.AppDataRepository;
 import com.safetynet.safetynetalerts.repository.MedicalRecordsRepository;
 import com.safetynet.safetynetalerts.service.MedicalRecordsService;
 
-
 @Service
-public class MedicalRecordsServiceImpl implements MedicalRecordsService{
+public class MedicalRecordsServiceImpl implements MedicalRecordsService {
 
 	@Autowired
-	private MedicalRecordsRepository medicalRecordsRepository ;
-	
+	private MedicalRecordsRepository medicalRecordsRepository;
+
 	@Autowired
-	private AppDataRepository appDataRepository ;
-	
-	
-	public MedicalRecord getMedicalRecordByFirstNameAndLastName (String firstName, String lastName) {
+	private AppDataRepository appDataRepository;
+
+	public MedicalRecord getMedicalRecordByFirstNameAndLastName(String firstName, String lastName) {
 		MedicalRecord[] medicalRecords = appDataRepository.readDatafromJson().getMedicalrecords();
-		return medicalRecordsRepository.getMedicalRecordByFirstNameAndLastName (medicalRecords, firstName, lastName);
+		return medicalRecordsRepository.getMedicalRecordByFirstNameAndLastName(medicalRecords, firstName, lastName);
 	}
-
 
 	@Override
 	public MedicalRecord[] getMedicalRecords() {
 		return medicalRecordsRepository.getMedicalRecordsFromData();
 	}
-
 
 	@Override
 	public MedicalRecord[] getMedicalRecordsByMinAge(int MinAge) {
@@ -37,31 +33,27 @@ public class MedicalRecordsServiceImpl implements MedicalRecordsService{
 		return medicalRecordsRepository.getMedicalRecordsByMinAge(medicalRecords, MinAge);
 	}
 
-
 	@Override
 	public MedicalRecord[] getMedicalRecordsByMaxAge(int MaxAge) {
 		MedicalRecord[] medicalRecords = appDataRepository.readDatafromJson().getMedicalrecords();
 		return medicalRecordsRepository.getMedicalRecordsByMaxAge(medicalRecords, MaxAge);
 	}
 
-
 	@Override
 	public void addMedicalRecordInData(MedicalRecord medicalRecord) {
 		medicalRecordsRepository.addMedicalRecordInData(medicalRecord);
-		
-	}
 
+	}
 
 	@Override
 	public void updateMedicalRecordInData(MedicalRecord medicalRecord) {
 		medicalRecordsRepository.updateMedicalRecordInData(medicalRecord);
-		
-	}
 
+	}
 
 	@Override
 	public void deleteMedicalRecordInData(String firstName, String lastName) {
 		medicalRecordsRepository.deleteMedicalRecordInData(firstName, lastName);
-		
+
 	}
 }

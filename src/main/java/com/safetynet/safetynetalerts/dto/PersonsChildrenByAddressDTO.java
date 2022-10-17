@@ -6,6 +6,6 @@ import lombok.Data;
 public class PersonsChildrenByAddressDTO {
 
 	private PersonNameAgeDTO[] listChildren;
-	
+
 	private PersonNameDTO[] listAdults;
 }

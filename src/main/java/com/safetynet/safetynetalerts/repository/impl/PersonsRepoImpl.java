@@ -13,85 +13,70 @@ import com.safetynet.safetynetalerts.repository.PersonsRepository;
 @Repository
 public class PersonsRepoImpl implements PersonsRepository {
 
-	
 	@Autowired
 	private AppDataRepository appDataRepo;
-	
-	
-	
-	public Person getPersonByFirstNameAndLastName (Person[] persons, String firstName, String lastName) {
-		
+
+	public Person getPersonByFirstNameAndLastName(Person[] persons, String firstName, String lastName) {
+
 		Person foundPerson = null;
-		
+
 		for (Person p : persons) {
-			if (p.getFirstName().equals(firstName) && p.getLastName().equals(lastName) ) {
-					foundPerson = p;
-					break;
+			if (p.getFirstName().equals(firstName) && p.getLastName().equals(lastName)) {
+				foundPerson = p;
+				break;
 			}
 		}
 		return foundPerson;
 	}
-	
-	
-public Person[] getPersonsByAddress (Person[] persons, String address) {
-		
-		List <Person> listPersons = new ArrayList<Person>();
-		
+
+	public Person[] getPersonsByAddress(Person[] persons, String address) {
+
+		List<Person> listPersons = new ArrayList<Person>();
+
 		for (Person p : persons) {
 			if (p.getAddress().equals(address)) {
-					listPersons.add(p);
+				listPersons.add(p);
 			}
 		}
 		Person[] foundPersons = listPersons.toArray(new Person[0]);
 		return foundPersons;
 	}
 
+	public Person[] getPersonsByCity(Person[] persons, String city) {
 
+		List<Person> listPersons = new ArrayList<Person>();
 
-public Person[] getPersonsByCity (Person[] persons, String city) {
-	
-	List <Person> listPersons = new ArrayList<Person>();
-	
-	for (Person p : persons) {
-		if (p.getCity().equals(city)) {
+		for (Person p : persons) {
+			if (p.getCity().equals(city)) {
 				listPersons.add(p);
+			}
 		}
+		Person[] foundPersons = listPersons.toArray(new Person[0]);
+		return foundPersons;
 	}
-	Person[] foundPersons = listPersons.toArray(new Person[0]);
-	return foundPersons;
+
+	@Override
+	public Person[] getPersonsFromAppData() {
+		Person[] persons = appDataRepo.readDatafromJson().getPersons();
+		return persons;
+	}
+
+	@Override
+	public void addPersonInData(Person person) {
+		appDataRepo.addPersonInJson(person);
+
+	}
+
+	@Override
+	public void updatePersonInData(Person person) {
+		appDataRepo.updatePersonInJson(person);
+
+	}
+
+	@Override
+	public void deletePersonInData(String firstName, String lastName) {
+		appDataRepo.deletePersonInJson(firstName, lastName);
+
+	}
+
 }
-
-
-@Override
-public Person[] getPersonsFromAppData() {
-	Person[] persons = appDataRepo.readDatafromJson().getPersons();
-	return persons;
-}
-
-
-
-@Override
-public void addPersonInData(Person person) {
-	appDataRepo.addPersonInJson(person);  
-	
-}
-
-
-@Override
-public void updatePersonInData(Person person) {
-	appDataRepo.updatePersonInJson(person);  
-	
-}
-
-
-@Override
-public void deletePersonInData(String firstName, String lastName) {
-	appDataRepo.deletePersonInJson(firstName, lastName); 
-	
-}
-		
-}
-
-
-
-
