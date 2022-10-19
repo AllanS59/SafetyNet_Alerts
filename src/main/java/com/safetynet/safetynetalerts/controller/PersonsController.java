@@ -58,7 +58,7 @@ public class PersonsController {
 	 * @return The Person object saved
 	 */
 	@PostMapping("/person")
-	public Person CreatePerson(@RequestBody Person person) {
+	public Person createPerson(@RequestBody Person person) {
 		LOG.info("Command POST /person received. Creating person");
 		personsService.addPersonInData(person);
 		return person;

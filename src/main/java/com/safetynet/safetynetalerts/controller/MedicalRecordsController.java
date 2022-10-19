@@ -60,7 +60,7 @@ public class MedicalRecordsController {
 	 * @return The MedicalRecord object saved
 	 */
 	@PostMapping("/medicalRecord")
-	public MedicalRecord CreateMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+	public MedicalRecord createMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
 		LOG.info("Command POST /medicalRecord received. Creating medicalRecord");
 		medicalRecordsService.addMedicalRecordInData(medicalRecord);
 		return medicalRecord;

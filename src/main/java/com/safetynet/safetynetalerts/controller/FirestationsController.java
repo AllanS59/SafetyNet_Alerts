@@ -54,7 +54,7 @@ public class FirestationsController {
 	 * @return The Firestation object saved
 	 */
 	@PostMapping("/firestation")
-	public Firestation CreateFirestation(@RequestBody Firestation firestation) {
+	public Firestation createFirestation(@RequestBody Firestation firestation) {
 		LOG.info("Command POST /firestation received. Creating firestation");
 		firestationsService.addFirestationInData(firestation);
 		return firestation;
